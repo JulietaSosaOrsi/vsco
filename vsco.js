@@ -1,6 +1,5 @@
 import mysql from 'serverless-mysql';
 
-// Configuramos la conexión a la base de datos usando variables de entorno
 const db = mysql({
   config: {
     host: process.env.MYSQL_HOST,
@@ -10,19 +9,22 @@ const db = mysql({
   }
 });
 
-export default async function handler(req, res) {
-  const userAgent = req.headers['user-agent'] || 'Desconocido';
+export const handler = async (event, context) => {
+  // En Netlify, los headers vienen dentro del objeto event
+  const userAgent = event.headers['user-agent'] || 'Desconocido';
   
   try {
-    // Registramos el clic
     await db.query('INSERT INTO vsco_clicks (user_agent) VALUES (?)', [userAgent]);
-    // Limpiamos la conexión para no saturar el servidor MySQL
     await db.end();
   } catch (error) {
-    // Si falla la BD, imprimimos el error pero no detenemos la ejecución
     console.error('Error al guardar en DB:', error);
-  } finally {
-    // Redirección invisible e instantánea a tu perfil
-    res.redirect(302, 'https://vsco.co/vscojulyy');
   }
-}
+
+  // En lugar de res.redirect, retornamos una respuesta HTTP 302 manual
+  return {
+    statusCode: 302,
+    headers: {
+      Location: 'https://vsco.co/vscojulyy', // Cambia esto por tu usuario
+    },
+  };
+};
