@@ -23,7 +23,7 @@ export const handler = async (event, context) => {
   return {
     statusCode: 302,
     headers: {
-      Location: 'https://vsco.co/TU_USUARIO_AQUI', // <-- ¡PON TU USUARIO DE VSCO AQUÍ!
+      Location: 'https://vsco.co/vscojulyy', // <-- ¡PON TU USUARIO DE VSCO AQUÍ!
     },
   };
 };
