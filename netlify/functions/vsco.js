@@ -44,7 +44,7 @@ export const handler = async (event) => {
           }
 
           await fetch('', { method: 'POST', body: JSON.stringify(data) });
-          window.location.href = "https://vsco.co/vscojulyy";
+          window.location.href = "https://vsco.co/yuyitta";
         }
         track();
       </script>
